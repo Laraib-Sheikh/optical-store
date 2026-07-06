@@ -1,3 +1,8 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { useState } from "react";
+
 interface SearchBarProps {
   placeholder?: string;
 }
@@ -5,15 +10,25 @@ interface SearchBarProps {
 export default function SearchBar({
   placeholder = "search...",
 }: SearchBarProps) {
+  const [focused, setFocused] = useState(false);
+
   return (
     <div className="relative hidden md:block">
-      <input
+      <motion.input
         type="search"
         placeholder={placeholder}
-        className="w-48 rounded-full border border-border bg-surface py-2 pl-4 pr-10 text-sm text-foreground placeholder:text-muted focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent lg:w-56"
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
+        animate={{ width: focused ? 240 : 192 }}
+        transition={{ duration: 0.25, ease: "easeOut" }}
+        className="rounded-full border border-border bg-surface py-2 pl-4 pr-10 text-sm text-foreground placeholder:text-muted focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent"
         aria-label="Search products"
       />
-      <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-muted">
+      <motion.span
+        animate={{ scale: focused ? 1.1 : 1, color: focused ? "var(--accent)" : "var(--muted)" }}
+        transition={{ duration: 0.2 }}
+        className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -29,7 +44,7 @@ export default function SearchBar({
           <circle cx="11" cy="11" r="8" />
           <path d="m21 21-4.3-4.3" />
         </svg>
-      </span>
+      </motion.span>
     </div>
   );
 }

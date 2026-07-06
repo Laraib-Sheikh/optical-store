@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 interface SectionHeaderProps {
   title: string;
@@ -14,7 +17,13 @@ export default function SectionHeader({
   actionHref = "#",
 }: SectionHeaderProps) {
   return (
-    <div className="mb-8 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.4 }}
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      className="mb-8 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between"
+    >
       <div>
         <h2 className="text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
           {title}
@@ -28,11 +37,14 @@ export default function SectionHeader({
       {actionLabel && (
         <Link
           href={actionHref}
-          className="text-sm font-medium text-accent hover:text-accent-hover"
+          className="group inline-flex items-center gap-1 text-sm font-medium text-accent hover:text-accent-hover"
         >
           {actionLabel}
+          <span className="transition-transform duration-200 group-hover:translate-x-1">
+            →
+          </span>
         </Link>
       )}
-    </div>
+    </motion.div>
   );
 }

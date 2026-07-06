@@ -1,5 +1,9 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { features } from "@/data/site-data";
 import SectionHeader from "@/components/ui/SectionHeader";
+import { RevealGroup, RevealItem } from "@/components/ui/Reveal";
 
 export default function WhyChooseSection() {
   return (
@@ -9,24 +13,33 @@ export default function WhyChooseSection() {
           title="Why Choose V-Dure"
           subtitle="Premium eyewear designed for comfort, quality, and everyday confidence."
         />
-        <div className="grid gap-6 md:grid-cols-3">
+        <RevealGroup className="grid gap-6 md:grid-cols-3">
           {features.map((feature) => (
-            <article
-              key={feature.title}
-              className="rounded-2xl border border-border bg-white p-8 transition-shadow hover:shadow-md"
-            >
-              <span className="text-3xl" role="img" aria-hidden="true">
-                {feature.icon}
-              </span>
-              <h3 className="mt-4 text-lg font-semibold text-foreground">
-                {feature.title}
-              </h3>
-              <p className="mt-3 text-sm leading-relaxed text-muted">
-                {feature.description}
-              </p>
-            </article>
+            <RevealItem key={feature.title}>
+              <motion.article
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
+                className="h-full rounded-2xl border border-border bg-white p-8 transition-shadow hover:shadow-md"
+              >
+                <motion.span
+                  whileHover={{ rotate: [0, -10, 10, -6, 0] }}
+                  transition={{ duration: 0.5 }}
+                  className="inline-block text-3xl"
+                  role="img"
+                  aria-hidden="true"
+                >
+                  {feature.icon}
+                </motion.span>
+                <h3 className="mt-4 text-lg font-semibold text-foreground">
+                  {feature.title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted">
+                  {feature.description}
+                </p>
+              </motion.article>
+            </RevealItem>
           ))}
-        </div>
+        </RevealGroup>
       </div>
     </section>
   );

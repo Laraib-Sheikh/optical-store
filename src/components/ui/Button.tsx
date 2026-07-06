@@ -1,9 +1,12 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 type ButtonVariant = "primary" | "secondary" | "outline" | "ghost";
 type ButtonSize = "sm" | "md" | "lg";
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "children"> {
   variant?: ButtonVariant;
   size?: ButtonSize;
   children: React.ReactNode;
@@ -31,7 +34,10 @@ export default function Button({
   ...props
 }: ButtonProps) {
   return (
-    <button
+    <motion.button
+      whileHover={{ scale: 1.03 }}
+      whileTap={{ scale: 0.97 }}
+      transition={{ duration: 0.15, ease: "easeOut" }}
       className={cn(
         "inline-flex items-center justify-center rounded-full font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
         variantStyles[variant],
@@ -41,6 +47,6 @@ export default function Button({
       {...props}
     >
       {children}
-    </button>
+    </motion.button>
   );
 }

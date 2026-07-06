@@ -1,6 +1,7 @@
 import { products } from "@/data/site-data";
 import SectionHeader from "@/components/ui/SectionHeader";
 import ProductCard from "@/components/ui/ProductCard";
+import { RevealGroup, RevealItem } from "@/components/ui/Reveal";
 
 export default function FeaturedFramesSection() {
   return (
@@ -9,11 +10,13 @@ export default function FeaturedFramesSection() {
         title="Frames you will love"
         subtitle="Choose the perfect frames for your face or your style."
       />
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <RevealGroup className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {products.map((product) => (
-          <ProductCard key={`featured-${product.id}`} product={product} />
+          <RevealItem key={`featured-${product.id}`}>
+            <ProductCard product={product} />
+          </RevealItem>
         ))}
-      </div>
+      </RevealGroup>
     </section>
   );
 }
