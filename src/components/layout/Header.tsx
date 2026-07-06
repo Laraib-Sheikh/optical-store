@@ -5,10 +5,12 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { navLinks } from "@/data/site-data";
 import SearchBar from "@/components/ui/SearchBar";
+import { useCart } from "@/components/ui/CartProvider";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { cartCount } = useCart();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -49,6 +51,17 @@ export default function Header() {
 
         <div className="flex items-center gap-3">
           <SearchBar />
+          <Link
+            href="/checkout"
+            className="relative rounded-full border border-border bg-surface px-3 py-2 text-sm font-medium text-foreground hover:bg-white"
+          >
+            Cart
+            {cartCount > 0 ? (
+              <span className="ml-2 inline-flex h-6 min-w-[1.5rem] items-center justify-center rounded-full bg-accent text-xs font-semibold text-white">
+                {cartCount}
+              </span>
+            ) : null}
+          </Link>
           <button
             type="button"
             className="rounded-full p-2 text-foreground hover:bg-surface lg:hidden"

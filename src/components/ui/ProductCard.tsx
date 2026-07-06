@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import type { Product } from "@/types";
 import { formatPrice } from "@/lib/utils";
 import Button from "./Button";
+import { useCart } from "@/components/ui/CartProvider";
 
 interface ProductCardProps {
   product: Product;
@@ -13,9 +14,11 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const [added, setAdded] = useState(false);
+  const { addItem } = useCart();
 
   const handleAddToCart = () => {
     if (added) return;
+    addItem(product);
     setAdded(true);
     window.setTimeout(() => setAdded(false), 1600);
   };
