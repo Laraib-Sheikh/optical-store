@@ -6,6 +6,28 @@ export interface Product {
   category?: string;
 }
 
+export interface OrderItem {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  image: string;
+}
+
+export interface Order {
+  id: string;
+  userEmail: string;
+  customerName: string;
+  address: string;
+  phone: string;
+  deliveryOption: string;
+  paymentMethod: string;
+  paymentProof?: string | null;
+  cartItems: OrderItem[];
+  status: string;
+  createdAt: string;
+}
+
 export interface NavLink {
   label: string;
   href: string;

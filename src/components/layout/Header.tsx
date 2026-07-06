@@ -1,22 +1,43 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { navLinks } from "@/data/site-data";
 import SearchBar from "@/components/ui/SearchBar";
 import { useCart } from "@/components/ui/CartProvider";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { cartCount } = useCart();
+  const [authRole, setAuthRole] = useState<string | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      try {
+        const res = await fetch("/api/auth");
+        if (!mounted) return;
+        const data = await res.json();
+        setAuthRole(data?.role ?? null);
+      } catch {
+        setAuthRole(null);
+      }
+    })();
+
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   return (
@@ -62,6 +83,19 @@ export default function Header() {
               </span>
             ) : null}
           </Link>
+          {authRole ? (
+            <button
+              type="button"
+              onClick={async () => {
+                await fetch("/api/auth", { method: "DELETE" });
+                setAuthRole(null);
+                router.push("/login");
+              }}
+              className="ml-2 rounded-full border border-border bg-white/0 px-3 py-2 text-sm font-medium text-foreground hover:bg-surface"
+            >
+              Sign out
+            </button>
+          ) : null}
           <button
             type="button"
             className="rounded-full p-2 text-foreground hover:bg-surface lg:hidden"

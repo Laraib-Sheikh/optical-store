@@ -50,17 +50,31 @@ export async function POST(req: NextRequest) {
       secure: process.env.NODE_ENV === "production",
       maxAge: AUTH_COOKIE_MAX_AGE,
     });
+    // also set the email so client can include it with orders
+    response.cookies.set("vdure-email", email, {
+      path: "/",
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      maxAge: AUTH_COOKIE_MAX_AGE,
+    });
     return response;
   }
 
   return NextResponse.json({ error: "Invalid role" }, { status: 400 });
 }
 
+export async function GET(req: NextRequest) {
+  const roleCookie = req.cookies.get(AUTH_COOKIE_NAME);
+  const emailCookie = req.cookies.get("vdure-email");
+  const role = roleCookie?.value ?? null;
+  const email = emailCookie?.value ?? null;
+  return NextResponse.json({ role, email });
+}
+
 export async function DELETE() {
   const response = NextResponse.json({ success: true });
-  response.cookies.set(AUTH_COOKIE_NAME, "", {
-    path: "/",
-    maxAge: 0,
-  });
+  response.cookies.set(AUTH_COOKIE_NAME, "", { path: "/", maxAge: 0 });
+  response.cookies.set("vdure-email", "", { path: "/", maxAge: 0 });
   return response;
 }

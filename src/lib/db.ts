@@ -22,6 +22,20 @@ export type UserRecord = {
   role: "customer" | "admin";
 };
 
+export type OrderRecord = {
+  id: string;
+  user_email: string;
+  customer_name: string;
+  address: string;
+  phone: string;
+  delivery_option: string;
+  payment_method: string;
+  payment_proof: string | null;
+  cart_items: unknown;
+  status: string;
+  created_at: string;
+};
+
 export async function query<T = any>(sql: string, params?: unknown[]): Promise<QueryResult<T>> {
   return pool.query(sql, params);
 }
@@ -43,6 +57,22 @@ export async function initDb() {
       email TEXT UNIQUE NOT NULL,
       password_hash TEXT NOT NULL,
       role TEXT NOT NULL
+    )
+  `);
+
+  await query(`
+    CREATE TABLE IF NOT EXISTS orders (
+      id TEXT PRIMARY KEY,
+      user_email TEXT NOT NULL,
+      customer_name TEXT NOT NULL,
+      address TEXT NOT NULL,
+      phone TEXT NOT NULL,
+      delivery_option TEXT NOT NULL,
+      payment_method TEXT NOT NULL,
+      payment_proof TEXT,
+      cart_items JSONB NOT NULL,
+      status TEXT NOT NULL,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     )
   `);
 }
@@ -82,6 +112,38 @@ export async function createUser(user: UserRecord): Promise<UserRecord> {
     [user.id, user.email, user.password_hash, user.role],
   );
   return user;
+}
+
+export async function createOrder(order: OrderRecord): Promise<OrderRecord> {
+  await initDb();
+  await query(
+    `INSERT INTO orders (id, user_email, customer_name, address, phone, delivery_option, payment_method, payment_proof, cart_items, status)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
+    [
+      order.id,
+      order.user_email,
+      order.customer_name,
+      order.address,
+      order.phone,
+      order.delivery_option,
+      order.payment_method,
+      order.payment_proof,
+      order.cart_items,
+      order.status,
+    ],
+  );
+
+  return order;
+}
+
+export async function getOrders(): Promise<OrderRecord[]> {
+  await initDb();
+  const result = await query<OrderRecord>(`
+    SELECT id, user_email, customer_name, address, phone, delivery_option, payment_method, payment_proof, cart_items, status, created_at
+    FROM orders
+    ORDER BY created_at DESC
+  `);
+  return result.rows;
 }
 
 export async function createProduct(product: ProductRecord): Promise<ProductRecord> {
