@@ -5,7 +5,11 @@ import Button from "@/components/ui/Button";
 
 const categories = ["Eyeglasses", "Sunglasses", "Contact Lenses", "Prescription", "Accessories"];
 
-export default function ProductForm() {
+interface ProductFormProps {
+  onSave?: () => void;
+}
+
+export default function ProductForm({ onSave }: ProductFormProps) {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [image, setImage] = useState("");
@@ -55,7 +59,9 @@ export default function ProductForm() {
     setName("");
     setPrice("");
     setImage("");
+    setImagePreview("");
     setCategory(categories[0]);
+    if (onSave) onSave();
   };
 
   return (

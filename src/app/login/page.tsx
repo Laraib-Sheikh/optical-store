@@ -9,6 +9,7 @@ export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState<"customer" | "admin">("customer");
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
@@ -20,7 +21,7 @@ export default function LoginPage() {
     const response = await fetch("/api/auth", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password, role: "customer" }),
+      body: JSON.stringify({ email, password, role }),
     });
 
     setSubmitting(false);
@@ -28,6 +29,11 @@ export default function LoginPage() {
     if (!response.ok) {
       const result = await response.json();
       setError(result.error ?? "Unable to sign in");
+      return;
+    }
+
+    if (role === "admin") {
+      router.push("/admin/add-product");
       return;
     }
 
@@ -65,6 +71,31 @@ export default function LoginPage() {
             />
           </label>
 
+          <fieldset className="flex gap-4">
+            <label className="inline-flex items-center gap-2 text-sm">
+              <input
+                type="radio"
+                name="role"
+                value="customer"
+                checked={role === "customer"}
+                onChange={() => setRole("customer")}
+                className="h-4 w-4 text-accent"
+              />
+              Customer
+            </label>
+            <label className="inline-flex items-center gap-2 text-sm">
+              <input
+                type="radio"
+                name="role"
+                value="admin"
+                checked={role === "admin"}
+                onChange={() => setRole("admin")}
+                className="h-4 w-4 text-accent"
+              />
+              Admin
+            </label>
+          </fieldset>
+
           <div className="space-y-3">
             <Button type="submit" className="w-full" disabled={submitting}>
               {submitting ? "Signing in..." : "Sign in"}
@@ -75,9 +106,6 @@ export default function LoginPage() {
 
         <p className="mt-6 text-sm text-muted-foreground">
           Don’t have an account? <Link href="/register" className="text-accent">Register here</Link>.
-        </p>
-        <p className="mt-3 text-sm text-muted-foreground">
-          Are you an admin? <Link href="/admin/login" className="text-accent">Admin login</Link>
         </p>
       </div>
     </main>
