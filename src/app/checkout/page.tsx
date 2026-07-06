@@ -1,10 +1,8 @@
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import Button from "@/components/ui/Button";
 import { requireUser } from "@/lib/auth";
 
-export default function CheckoutPage() {
-  requireUser("/login");
+export default async function CheckoutPage() {
+  await requireUser("/login");
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">

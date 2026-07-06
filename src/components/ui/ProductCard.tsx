@@ -48,7 +48,12 @@ export default function ProductCard({ product }: ProductCardProps) {
           </p>
         </div>
         <div className="relative mt-auto flex flex-wrap gap-2">
-          <Button variant="outline" size="sm" className="flex-1">
+          <Button
+            variant="outline"
+            size="sm"
+            className="flex-1"
+            onClick={handleAddToCart}
+          >
             Add To Cart
           </Button>
           <Button

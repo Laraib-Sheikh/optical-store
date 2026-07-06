@@ -5,41 +5,46 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Button from "@/components/ui/Button";
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError("");
+    setSuccess("");
     setSubmitting(true);
 
-    const response = await fetch("/api/auth", {
+    const response = await fetch("/api/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password, role: "customer" }),
+      body: JSON.stringify({ email, password }),
     });
 
     setSubmitting(false);
+    const result = await response.json();
 
     if (!response.ok) {
-      const result = await response.json();
-      setError(result.error ?? "Unable to sign in");
+      setError(result.error ?? "Unable to register");
       return;
     }
 
-    router.push("/checkout");
+    setSuccess("Registration successful. Please log in.");
+    setEmail("");
+    setPassword("");
+    router.push("/login");
   };
 
   return (
     <main className="mx-auto max-w-lg px-4 py-16 sm:px-6 lg:px-8">
       <div className="rounded-3xl border border-border bg-white p-8 shadow-sm">
-        <h1 className="text-3xl font-semibold text-foreground">Login to Continue</h1>
+        <h1 className="text-3xl font-semibold text-foreground">Register</h1>
         <p className="mt-2 text-sm text-muted-foreground">
-          Login is required to proceed with checkout.
+          Create a customer account to login before checkout.
         </p>
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-4">
@@ -67,17 +72,15 @@ export default function LoginPage() {
 
           <div className="space-y-3">
             <Button type="submit" className="w-full" disabled={submitting}>
-              {submitting ? "Signing in..." : "Sign in"}
+              {submitting ? "Registering..." : "Register"}
             </Button>
             {error ? <p className="text-sm text-destructive">{error}</p> : null}
+            {success ? <p className="text-sm text-success">{success}</p> : null}
           </div>
         </form>
 
         <p className="mt-6 text-sm text-muted-foreground">
-          Don’t have an account? <Link href="/register" className="text-accent">Register here</Link>.
-        </p>
-        <p className="mt-3 text-sm text-muted-foreground">
-          Are you an admin? <Link href="/admin/login" className="text-accent">Admin login</Link>
+          Already have an account? <Link href="/login" className="text-accent">Login</Link>
         </p>
       </div>
     </main>

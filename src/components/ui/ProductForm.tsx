@@ -9,9 +9,28 @@ export default function ProductForm() {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [image, setImage] = useState("");
+  const [imagePreview, setImagePreview] = useState("");
   const [category, setCategory] = useState(categories[0]);
   const [status, setStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const [message, setMessage] = useState("");
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) {
+      setImage("");
+      setImagePreview("");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result === "string") {
+        setImage(reader.result);
+        setImagePreview(reader.result);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -67,15 +86,22 @@ export default function ProductForm() {
       </div>
 
       <label className="block">
-        <span className="text-sm font-medium text-foreground">Image URL</span>
+        <span className="text-sm font-medium text-foreground">Upload Image</span>
         <input
-          type="url"
-          value={image}
-          onChange={(event) => setImage(event.target.value)}
-          className="mt-2 w-full rounded-2xl border border-border bg-surface px-4 py-3 text-sm text-foreground focus:border-accent focus:outline-none"
+          type="file"
+          accept="image/*"
+          onChange={handleFileChange}
+          className="mt-2 w-full rounded-2xl border border-border bg-surface px-4 py-3 text-sm text-foreground file:mr-4 file:rounded-full file:border-0 file:bg-accent file:px-4 file:py-2 file:text-sm file:text-white focus:border-accent focus:outline-none"
           required
         />
       </label>
+
+      {imagePreview ? (
+        <div className="rounded-2xl border border-border bg-white p-4">
+          <span className="text-sm font-medium text-foreground">Preview</span>
+          <img src={imagePreview} alt="Image preview" className="mt-3 max-h-52 w-full rounded-2xl object-cover" />
+        </div>
+      ) : null}
 
       <label className="block">
         <span className="text-sm font-medium text-foreground">Category</span>

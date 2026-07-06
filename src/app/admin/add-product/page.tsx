@@ -1,9 +1,8 @@
-import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/auth";
 import ProductForm from "@/components/ui/ProductForm";
 
 export default async function AdminAddProductPage() {
-  requireAdmin();
+  await requireAdmin();
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">

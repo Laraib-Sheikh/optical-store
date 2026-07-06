@@ -15,6 +15,13 @@ export type ProductRecord = {
   category: string | null;
 };
 
+export type UserRecord = {
+  id: string;
+  email: string;
+  password_hash: string;
+  role: "customer" | "admin";
+};
+
 export async function query<T = any>(sql: string, params?: unknown[]): Promise<QueryResult<T>> {
   return pool.query(sql, params);
 }
@@ -27,6 +34,15 @@ export async function initDb() {
       price INTEGER NOT NULL,
       image TEXT NOT NULL,
       category TEXT
+    )
+  `);
+
+  await query(`
+    CREATE TABLE IF NOT EXISTS users (
+      id TEXT PRIMARY KEY,
+      email TEXT UNIQUE NOT NULL,
+      password_hash TEXT NOT NULL,
+      role TEXT NOT NULL
     )
   `);
 }
@@ -48,6 +64,24 @@ export async function getProductById(id: string): Promise<ProductRecord | null> 
     [id],
   );
   return result.rows[0] ?? null;
+}
+
+export async function getUserByEmail(email: string): Promise<UserRecord | null> {
+  await initDb();
+  const result = await query<UserRecord>(
+    `SELECT id, email, password_hash, role FROM users WHERE email = $1`,
+    [email],
+  );
+  return result.rows[0] ?? null;
+}
+
+export async function createUser(user: UserRecord): Promise<UserRecord> {
+  await initDb();
+  await query(
+    `INSERT INTO users (id, email, password_hash, role) VALUES ($1, $2, $3, $4)` ,
+    [user.id, user.email, user.password_hash, user.role],
+  );
+  return user;
 }
 
 export async function createProduct(product: ProductRecord): Promise<ProductRecord> {

@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getUserByEmail } from "@/lib/db";
+import { verifyPassword } from "@/lib/auth";
 
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? "admin@vdure.store";
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ?? "Admin123!";
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? "admin@optical.com";
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ?? "optical123";
 const AUTH_COOKIE_NAME = "vdure-user";
 const AUTH_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
 
@@ -33,6 +35,11 @@ export async function POST(req: NextRequest) {
         { error: "Email and password are required" },
         { status: 400 },
       );
+    }
+
+    const user = await getUserByEmail(email);
+    if (!user || user.role !== "customer" || !verifyPassword(password, user.password_hash)) {
+      return NextResponse.json({ error: "Invalid login credentials" }, { status: 401 });
     }
 
     const response = NextResponse.json({ success: true, role: "customer" });
