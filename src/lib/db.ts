@@ -1,4 +1,4 @@
-import { Pool, QueryResult } from "pg";
+import { Pool } from "pg";
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -36,7 +36,7 @@ export type OrderRecord = {
   created_at: string;
 };
 
-export async function query<T = any>(sql: string, params?: unknown[]): Promise<QueryResult<T>> {
+export async function query(sql: string, params?: unknown[]) {
   return pool.query(sql, params);
 }
 
@@ -79,30 +79,30 @@ export async function initDb() {
 
 export async function getProducts(): Promise<ProductRecord[]> {
   await initDb();
-  const result = await query<ProductRecord>(`
+  const result = await query(`
     SELECT id, name, price, image, category
     FROM products
     ORDER BY name
   `);
-  return result.rows;
+  return result.rows as ProductRecord[];
 }
 
 export async function getProductById(id: string): Promise<ProductRecord | null> {
   await initDb();
-  const result = await query<ProductRecord>(
+  const result = await query(
     `SELECT id, name, price, image, category FROM products WHERE id = $1`,
     [id],
   );
-  return result.rows[0] ?? null;
+  return (result.rows as ProductRecord[])[0] ?? null;
 }
 
 export async function getUserByEmail(email: string): Promise<UserRecord | null> {
   await initDb();
-  const result = await query<UserRecord>(
+  const result = await query(
     `SELECT id, email, password_hash, role FROM users WHERE email = $1`,
     [email],
   );
-  return result.rows[0] ?? null;
+  return (result.rows as UserRecord[])[0] ?? null;
 }
 
 export async function createUser(user: UserRecord): Promise<UserRecord> {
@@ -138,12 +138,12 @@ export async function createOrder(order: OrderRecord): Promise<OrderRecord> {
 
 export async function getOrders(): Promise<OrderRecord[]> {
   await initDb();
-  const result = await query<OrderRecord>(`
+  const result = await query(`
     SELECT id, user_email, customer_name, address, phone, delivery_option, payment_method, payment_proof, cart_items, status, created_at
     FROM orders
     ORDER BY created_at DESC
   `);
-  return result.rows;
+  return result.rows as OrderRecord[];
 }
 
 export async function createProduct(product: ProductRecord): Promise<ProductRecord> {

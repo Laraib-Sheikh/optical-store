@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 declare module "framer-motion" {
   import * as React from "react";
   // Lightweight local shim to avoid strict type mismatches with installed
