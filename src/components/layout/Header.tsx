@@ -53,8 +53,30 @@ export default function Header() {
       className="sticky top-0 z-50 border-b border-border bg-white/95 backdrop-blur-sm"
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="text-xl font-bold tracking-tight text-foreground">
-          V-Dure
+        <Link href="/" className="flex items-center gap-2">
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-foreground text-white">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="6" cy="14" r="3.2" />
+              <circle cx="18" cy="14" r="3.2" />
+              <path d="M9.2 14h5.6" />
+              <path d="M2.8 14 4.5 7h1.8" />
+              <path d="M21.2 14 19.5 7h-1.8" />
+            </svg>
+          </span>
+          <span className="hidden text-xl font-bold tracking-tight text-foreground sm:inline">
+            V-Dure
+          </span>
         </Link>
 
         <nav className="hidden items-center gap-8 lg:flex" aria-label="Main navigation">
@@ -70,19 +92,79 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1 sm:gap-2">
           <SearchBar />
+
+          <Link
+            href={authRole ? "/account" : "/login"}
+            aria-label="Account"
+            className="rounded-full p-2 text-foreground hover:bg-surface"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="8" r="4" />
+              <path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7" />
+            </svg>
+          </Link>
+
+          <Link
+            href="/wishlist"
+            aria-label="Wishlist"
+            className="rounded-full p-2 text-foreground hover:bg-surface"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M12 20s-7-4.35-9.5-8.8C.8 8 2.2 4.5 5.6 4a4.9 4.9 0 0 1 6.4 2 4.9 4.9 0 0 1 6.4-2c3.4.5 4.8 4 3.1 7.2C19 15.65 12 20 12 20Z" />
+            </svg>
+          </Link>
+
           <Link
             href="/checkout"
-            className="relative rounded-full border border-border bg-surface px-3 py-2 text-sm font-medium text-foreground hover:bg-white"
+            aria-label="Cart"
+            className="relative rounded-full p-2 text-foreground hover:bg-surface"
           >
-            Cart
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M6 7h12l1 13H5L6 7Z" />
+              <path d="M9 10V6a3 3 0 0 1 6 0v4" />
+            </svg>
             {cartCount > 0 ? (
-              <span className="ml-2 inline-flex h-6 min-w-[1.5rem] items-center justify-center rounded-full bg-accent text-xs font-semibold text-white">
+              <span className="absolute -right-1 -top-1 inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-accent px-1 text-[11px] font-semibold text-white">
                 {cartCount}
               </span>
             ) : null}
           </Link>
+
           {authRole ? (
             <button
               type="button"
@@ -91,11 +173,12 @@ export default function Header() {
                 setAuthRole(null);
                 router.push("/login");
               }}
-              className="ml-2 rounded-full border border-border bg-white/0 px-3 py-2 text-sm font-medium text-foreground hover:bg-surface"
+              className="ml-1 hidden rounded-full border border-border bg-white/0 px-3 py-2 text-sm font-medium text-foreground hover:bg-surface sm:inline-flex"
             >
               Sign out
             </button>
           ) : null}
+
           <button
             type="button"
             className="rounded-full p-2 text-foreground hover:bg-surface lg:hidden"

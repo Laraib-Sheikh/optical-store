@@ -23,6 +23,37 @@ export default function Footer() {
                 Helping you see clearly and look your best with premium eyewear
                 designed for comfort, style, and confidence.
               </p>
+              <div className="mt-5 flex items-center gap-3">
+                <a
+                  href="#"
+                  aria-label="Facebook"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-white transition-colors hover:bg-white/10"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M13.5 21v-8h2.7l.4-3.1h-3.1V8c0-.9.25-1.5 1.55-1.5H16.7V3.7c-.28-.04-1.24-.12-2.36-.12-2.33 0-3.93 1.42-3.93 4.03v2.28H8v3.1h2.4V21h3.1Z" />
+                  </svg>
+                </a>
+                <a
+                  href="#"
+                  aria-label="X (Twitter)"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-white transition-colors hover:bg-white/10"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M18.9 3H21l-6.4 7.3L22.2 21h-6.6l-4.8-6.3L5.2 21H3l6.9-7.8L2 3h6.7l4.3 5.8L18.9 3Zm-1.2 16h1.2L7.9 5H6.6l11.1 14Z" />
+                  </svg>
+                </a>
+                <a
+                  href="#"
+                  aria-label="Instagram"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-white transition-colors hover:bg-white/10"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                    <rect x="3.5" y="3.5" width="17" height="17" rx="4.5" />
+                    <circle cx="12" cy="12" r="3.6" />
+                    <circle cx="17" cy="7" r="0.9" fill="currentColor" stroke="none" />
+                  </svg>
+                </a>
+              </div>
               <motion.button
                 type="button"
                 onClick={scrollToTop}

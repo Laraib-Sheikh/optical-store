@@ -5,6 +5,8 @@ import { features } from "@/data/site-data";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { RevealGroup, RevealItem } from "@/components/ui/Reveal";
 
+const BLOB_COLORS = ["bg-indigo-100", "bg-rose-100", "bg-emerald-100"];
+
 export default function WhyChooseSection() {
   return (
     <section id="features" className="bg-surface py-16">
@@ -14,7 +16,7 @@ export default function WhyChooseSection() {
           subtitle="Premium eyewear designed for comfort, quality, and everyday confidence."
         />
         <RevealGroup className="grid gap-6 md:grid-cols-3">
-          {features.map((feature) => (
+          {features.map((feature, index) => (
             <RevealItem key={feature.title}>
               <motion.article
                 whileHover={{ y: -4 }}
@@ -24,7 +26,7 @@ export default function WhyChooseSection() {
                 <motion.span
                   whileHover={{ rotate: [0, -10, 10, -6, 0] }}
                   transition={{ duration: 0.5 }}
-                  className="inline-block text-3xl"
+                  className={`inline-flex h-14 w-14 items-center justify-center rounded-2xl text-3xl ${BLOB_COLORS[index % BLOB_COLORS.length]}`}
                   role="img"
                   aria-hidden="true"
                 >
