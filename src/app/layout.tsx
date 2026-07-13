@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/components/ui/CartProvider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const montserrat = Montserrat({
+  variable: "--font-display",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -21,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} antialiased`}>
+      <body className={`${montserrat.variable} antialiased`}>
         <CartProvider>{children}</CartProvider>
       </body>
     </html>

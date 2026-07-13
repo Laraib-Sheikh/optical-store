@@ -42,13 +42,13 @@ export interface Feature {
 export interface FrameShape {
   id: string;
   label: string;
-  image: string;
+  image?: string;
 }
 
 export interface LensType {
   id: string;
   label: string;
-  image: string;
+  image?: string;
 }
 
 export interface CategoryItem {
