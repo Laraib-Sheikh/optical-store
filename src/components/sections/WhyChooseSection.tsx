@@ -1,44 +1,56 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { features } from "@/data/site-data";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { RevealGroup, RevealItem } from "@/components/ui/Reveal";
 
-const BLOB_COLORS = ["bg-indigo-100", "bg-rose-100", "bg-emerald-100"];
+const BLOB_STYLES = [
+  "bg-pastel-blue -rotate-6",
+  "bg-pastel-lilac rotate-6",
+  "bg-pastel-mint rotate-3",
+];
 
 export default function WhyChooseSection() {
   return (
-    <section id="features" className="bg-surface py-16">
+    <section id="features" className="bg-white py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeader
           title="Why Choose V-Dure"
           subtitle="Premium eyewear designed for comfort, quality, and everyday confidence."
+          align="center"
         />
-        <RevealGroup className="grid gap-6 md:grid-cols-3">
+        <RevealGroup className="grid gap-10 md:grid-cols-3 md:gap-8">
           {features.map((feature, index) => (
             <RevealItem key={feature.title}>
-              <motion.article
-                whileHover={{ y: -4 }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
-                className="h-full rounded-2xl border border-border bg-white p-8 transition-shadow hover:shadow-md"
-              >
-                <motion.span
-                  whileHover={{ rotate: [0, -10, 10, -6, 0] }}
-                  transition={{ duration: 0.5 }}
-                  className={`inline-flex h-14 w-14 items-center justify-center rounded-2xl text-3xl ${BLOB_COLORS[index % BLOB_COLORS.length]}`}
-                  role="img"
+              <div className="relative mx-auto max-w-sm pt-4">
+                <div
+                  className={`absolute inset-x-3 inset-y-0 rounded-3xl ${BLOB_STYLES[index % BLOB_STYLES.length]}`}
                   aria-hidden="true"
+                />
+                <motion.article
+                  whileHover={{ y: -4 }}
+                  transition={{ duration: 0.2, ease: "easeOut" }}
+                  className="relative flex h-full flex-col items-center rounded-3xl bg-white px-6 py-10 text-center shadow-[0_12px_32px_rgba(0,0,0,0.08)]"
                 >
-                  {feature.icon}
-                </motion.span>
-                <h3 className="mt-4 text-lg font-semibold text-foreground">
-                  {feature.title}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-muted">
-                  {feature.description}
-                </p>
-              </motion.article>
+                  <div className="relative mb-5 h-14 w-14">
+                    <Image
+                      src={feature.icon}
+                      alt=""
+                      fill
+                      className="object-contain"
+                      sizes="56px"
+                    />
+                  </div>
+                  <h3 className="text-lg font-bold text-foreground">
+                    {feature.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-foreground/80">
+                    {feature.description}
+                  </p>
+                </motion.article>
+              </div>
             </RevealItem>
           ))}
         </RevealGroup>

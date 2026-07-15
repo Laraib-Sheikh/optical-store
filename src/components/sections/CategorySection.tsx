@@ -7,11 +7,14 @@ import { RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { cn } from "@/lib/utils";
 
 export default function CategorySection() {
-  const [active, setActive] = useState<string>(categoryItems[0]?.label ?? "");
+  const [active, setActive] = useState<string>("");
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-      <SectionHeader title="Frames For Your Gender" />
+    <section
+      id="eyeglasses"
+      className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8"
+    >
+      <SectionHeader title="Frames For Your Gender" align="center" />
       <RevealGroup className="flex flex-wrap justify-center gap-3">
         {categoryItems.map((item) => (
           <RevealItem key={item.id}>
@@ -22,7 +25,7 @@ export default function CategorySection() {
                 "rounded-full border px-6 py-2.5 text-sm font-medium transition-colors",
                 active === item.label
                   ? "border-foreground bg-foreground text-white"
-                  : "border-border bg-white text-foreground hover:border-foreground/30",
+                  : "border-foreground bg-white text-foreground hover:bg-surface",
               )}
             >
               {item.label}
