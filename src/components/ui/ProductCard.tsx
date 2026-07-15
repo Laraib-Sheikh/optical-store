@@ -12,14 +12,14 @@ interface ProductCardProps {
   product: Product;
 }
 
-const PASTELS = ["bg-pastel-blue", "bg-pastel-pink", "bg-pastel-blue"];
+const CHIP_COLORS = ["bg-indigo-100", "bg-rose-100", "bg-indigo-100"];
 
-function pastelFor(id: string) {
+function chipColorFor(id: string) {
   let hash = 0;
   for (let i = 0; i < id.length; i += 1) {
-    hash = (hash + id.charCodeAt(i)) % PASTELS.length;
+    hash = (hash + id.charCodeAt(i)) % CHIP_COLORS.length;
   }
-  return PASTELS[hash];
+  return CHIP_COLORS[hash];
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
@@ -36,18 +36,18 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   return (
     <motion.article
-      whileHover={{ y: -4 }}
+      whileHover={{ y: -6 }}
       transition={{ duration: 0.25, ease: "easeOut" }}
-      className="group relative flex flex-col overflow-hidden rounded-[1.25rem] bg-white shadow-[0_12px_32px_rgba(0,0,0,0.06)] ring-1 ring-black/5"
+      className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-white transition-shadow hover:shadow-xl"
     >
       <div
-        className={`relative m-3 mb-0 aspect-square overflow-hidden rounded-2xl ${pastelFor(product.id)}`}
+        className={`relative aspect-square overflow-hidden ${chipColorFor(product.id)}`}
       >
         <Image
           src={product.image}
           alt={product.name}
           fill
-          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+          className="object-cover transition-transform duration-500 ease-out group-hover:scale-110"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
         />
         <button
@@ -55,16 +55,16 @@ export default function ProductCard({ product }: ProductCardProps) {
           onClick={() => setWishlisted((v) => !v)}
           aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
           aria-pressed={wishlisted}
-          className="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-full text-foreground transition-colors hover:bg-white/70"
+          className="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-foreground shadow-sm transition-colors hover:bg-white"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="18"
-            height="18"
+            width="16"
+            height="16"
             viewBox="0 0 24 24"
-            fill={wishlisted ? "currentColor" : "none"}
-            stroke="currentColor"
-            strokeWidth="1.8"
+            fill={wishlisted ? "var(--accent)" : "none"}
+            stroke={wishlisted ? "var(--accent)" : "currentColor"}
+            strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
             aria-hidden="true"
@@ -73,16 +73,16 @@ export default function ProductCard({ product }: ProductCardProps) {
           </svg>
         </button>
       </div>
-      <div className="flex flex-1 flex-col gap-4 p-5 pt-4">
+      <div className="flex flex-1 flex-col gap-4 p-5">
         <div>
           <h3 className="text-base font-medium text-foreground">
             {product.name}
           </h3>
-          <p className="mt-1 text-lg font-bold text-foreground">
+          <p className="mt-1 text-lg font-semibold text-foreground">
             {formatPrice(product.price)}
           </p>
         </div>
-        <div className="relative mt-auto flex gap-2">
+        <div className="relative mt-auto flex flex-wrap gap-2">
           <Button
             variant="outline"
             size="sm"

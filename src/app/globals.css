@@ -2,16 +2,12 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #0a0a0a;
-  --muted: #6b6b6b;
-  --accent: #0a0a0a;
-  --accent-hover: #2a2a2a;
-  --surface: #f2f2f2;
-  --border: #e5e5e5;
-  --pastel-blue: #e8ecfe;
-  --pastel-pink: #f8e6e8;
-  --pastel-mint: #e6f5ef;
-  --pastel-lilac: #f0e6f5;
+  --foreground: #1a1a1a;
+  --muted: #6b7280;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --surface: #f9fafb;
+  --border: #e5e7eb;
 }
 
 @theme inline {
@@ -22,20 +18,11 @@
   --color-accent-hover: var(--accent-hover);
   --color-surface: var(--surface);
   --color-border: var(--border);
-  --color-pastel-blue: var(--pastel-blue);
-  --color-pastel-pink: var(--pastel-pink);
-  --color-pastel-mint: var(--pastel-mint);
-  --color-pastel-lilac: var(--pastel-lilac);
-  --font-sans: var(--font-display);
+  --font-sans: var(--font-geist-sans);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-display), system-ui, sans-serif;
-}
-
-::selection {
-  background: #0a0a0a;
-  color: #ffffff;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
 }
