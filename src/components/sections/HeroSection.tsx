@@ -85,7 +85,7 @@ export default function HeroSection() {
 
       <div className="relative mx-auto flex aspect-video w-full max-w-7xl flex-col items-center justify-end gap-3 px-4 pb-12 pt-8 text-center sm:aspect-auto sm:min-h-[460px] sm:items-start sm:justify-center sm:gap-5 sm:px-6 sm:py-20 sm:text-left lg:min-h-[560px] lg:px-8">
         <h1 className="max-w-xl text-2xl font-bold leading-[1.1] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">
-          See Better , Look Better!
+        Featured collection
         </h1>
         <p className="max-w-lg text-sm leading-relaxed text-white/90 sm:text-base md:text-lg">
           Elevate your vision with stylish, high-quality eyewear crafted for
