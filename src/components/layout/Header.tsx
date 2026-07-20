@@ -62,15 +62,24 @@ export default function Header() {
       className="sticky top-0 z-50 border-b border-border bg-white/95 backdrop-blur-sm"
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-4 sm:gap-4 sm:px-6 lg:px-8">
-        <Link href="/" className="relative h-10 w-16 shrink-0 sm:h-11 sm:w-20">
-          <Image
-            src="/design/logo.png"
-            alt="U-DURE"
-            fill
-            className="object-contain object-left"
-            sizes="80px"
-            priority
-          />
+        <Link
+          href="/"
+          className="flex min-w-0 shrink items-center gap-2 sm:gap-2.5"
+          aria-label="U-DURE — See Better, Look Better"
+        >
+          <span className="relative h-9 w-14 shrink-0 sm:h-11 sm:w-20">
+            <Image
+              src="/design/logo.png"
+              alt=""
+              fill
+              className="object-contain object-left"
+              sizes="80px"
+              priority
+            />
+          </span>
+          <span className="truncate text-[11px] font-semibold leading-tight tracking-tight text-foreground sm:text-sm">
+            See Better, Look Better
+          </span>
         </Link>
 
         <nav
