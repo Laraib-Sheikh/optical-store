@@ -93,7 +93,11 @@ export default function HeroSection() {
           and timeless design.
         </p>
         <div>
-          <Button variant="light" size="lg">
+          <Button
+            variant="light"
+            size="lg"
+            className="min-h-9 px-4 py-2 text-xs sm:min-h-12 sm:px-8 sm:py-3.5 sm:text-base"
+          >
             Shop Now
             <span aria-hidden="true">→</span>
           </Button>
