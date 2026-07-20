@@ -57,11 +57,31 @@ export const frameShapes: FrameShape[] = [
 ];
 
 export const lensTypes: LensType[] = [
-  { id: "single-vision", label: "Single vision" },
-  { id: "bifocal", label: "Bifocal" },
-  { id: "multifocal", label: "Multifocal" },
-  { id: "trifocal", label: "Trifocal" },
-  { id: "progressive", label: "Progressive" },
+  {
+    id: "single-vision",
+    label: "Single vision",
+    image: "/design/lens-types/single-vision.png",
+  },
+  {
+    id: "bifocal",
+    label: "Bifocal",
+    image: "/design/lens-types/bifocal.png",
+  },
+  {
+    id: "multifocal",
+    label: "Multifocal",
+    image: "/design/lens-types/multifocal.png",
+  },
+  {
+    id: "trifocal",
+    label: "Trifocal",
+    image: "/design/lens-types/trifocal.png",
+  },
+  {
+    id: "progressive",
+    label: "Progressive",
+    image: "/design/lens-types/progressive.png",
+  },
 ];
 
 export const features: Feature[] = [
