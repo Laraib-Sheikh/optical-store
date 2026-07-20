@@ -4,9 +4,10 @@ import "./globals.css";
 import { CartProvider } from "@/components/ui/CartProvider";
 
 const montserrat = Montserrat({
-  variable: "--font-display",
+  variable: "--font-montserrat",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
 });
 
 export const viewport: Viewport = {
@@ -26,8 +27,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${montserrat.variable} antialiased`}>
+    <html lang="en" className={`${montserrat.variable} ${montserrat.className}`}>
+      <body className="font-sans antialiased">
         <CartProvider>{children}</CartProvider>
       </body>
     </html>

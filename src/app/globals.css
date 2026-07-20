@@ -26,7 +26,7 @@
   --color-pastel-pink: var(--pastel-pink);
   --color-pastel-mint: var(--pastel-mint);
   --color-pastel-lilac: var(--pastel-lilac);
-  --font-sans: var(--font-display);
+  --font-sans: var(--font-montserrat), "Montserrat", system-ui, sans-serif;
 }
 
 html {
@@ -36,7 +36,7 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-display), system-ui, sans-serif;
+  font-family: var(--font-montserrat), "Montserrat", system-ui, sans-serif;
   overflow-x: clip;
   -webkit-tap-highlight-color: transparent;
 }
