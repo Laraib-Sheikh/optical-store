@@ -56,3 +56,9 @@ export interface CategoryItem {
   label: string;
   image: string;
 }
+
+export interface HeroSlide {
+  id: string;
+  image: string;
+  alt: string;
+}

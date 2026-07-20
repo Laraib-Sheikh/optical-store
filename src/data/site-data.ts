@@ -5,7 +5,26 @@ import type {
   FrameShape,
   LensType,
   CategoryItem,
+  HeroSlide,
 } from "@/types";
+
+export const heroSlides: HeroSlide[] = [
+  {
+    id: "slide-hero",
+    image: "/design/hero.jpg",
+    alt: "Premium tortoiseshell sunglasses on stone",
+  },
+  {
+    id: "slide-1",
+    image: "/design/hero-slide-1.png",
+    alt: "Tortoiseshell sunglasses reflecting a beach scene",
+  },
+  {
+    id: "slide-2",
+    image: "/design/hero-slide-2.png",
+    alt: "Collection of premium eyeglass frames",
+  },
+];
 
 export const navLinks: NavLink[] = [
   { label: "Eyeglasses", href: "#eyeglasses" },
