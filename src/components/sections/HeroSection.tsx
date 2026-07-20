@@ -60,12 +60,12 @@ export default function HeroSection() {
       aria-roledescription="carousel"
       aria-label="Featured eyewear"
     >
-      <div className="absolute inset-0 -z-10">
+      <div className="absolute inset-0">
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
             key={heroSlides[activeIndex].id}
-            initial={{ opacity: 0, scale: 1.04 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="absolute inset-0"
@@ -80,11 +80,11 @@ export default function HeroSection() {
             />
           </motion.div>
         </AnimatePresence>
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/35 to-black/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-black/15 sm:bg-gradient-to-r sm:from-black/60 sm:via-black/35 sm:to-black/10" />
       </div>
 
-      <div className="mx-auto flex min-h-[360px] max-w-7xl flex-col justify-center gap-4 px-4 py-16 sm:min-h-[460px] sm:gap-5 sm:px-6 sm:py-20 lg:min-h-[560px] lg:px-8">
-        <h1 className="max-w-xl text-3xl font-bold leading-[1.1] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">
+      <div className="relative mx-auto flex aspect-video w-full max-w-7xl flex-col justify-end gap-3 px-4 pb-12 pt-8 sm:aspect-auto sm:min-h-[460px] sm:justify-center sm:gap-5 sm:px-6 sm:py-20 lg:min-h-[560px] lg:px-8">
+        <h1 className="max-w-xl text-2xl font-bold leading-[1.1] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">
           See Better , Look Better!
         </h1>
         <p className="max-w-lg text-sm leading-relaxed text-white/90 sm:text-base md:text-lg">
@@ -100,7 +100,7 @@ export default function HeroSection() {
         </div>
       </div>
 
-      <div className="absolute inset-x-0 bottom-5 flex items-center justify-center gap-2 sm:bottom-6">
+      <div className="absolute inset-x-0 bottom-4 flex items-center justify-center gap-2 sm:bottom-6">
         {heroSlides.map((slide, index) => (
           <button
             key={slide.id}
