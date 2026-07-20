@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const { cartCount } = useCart();
   const [authRole, setAuthRole] = useState<string | null>(null);
   const router = useRouter();
@@ -41,11 +42,18 @@ export default function Header() {
     };
   }, []);
 
+  const handleSignOut = async () => {
+    await fetch("/api/auth", { method: "DELETE" });
+    setAuthRole(null);
+    setMenuOpen(false);
+    router.push("/login");
+  };
+
   return (
     <motion.header
       animate={{
-        paddingTop: scrolled ? 8 : 14,
-        paddingBottom: scrolled ? 8 : 14,
+        paddingTop: scrolled ? 8 : 12,
+        paddingBottom: scrolled ? 8 : 12,
         boxShadow: scrolled
           ? "0 1px 0 rgba(0,0,0,0.06), 0 8px 20px -12px rgba(0,0,0,0.12)"
           : "0 0 0 rgba(0,0,0,0)",
@@ -53,8 +61,8 @@ export default function Header() {
       transition={{ duration: 0.25, ease: "easeOut" }}
       className="sticky top-0 z-50 border-b border-border bg-white/95 backdrop-blur-sm"
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="relative h-11 w-[4.5rem] shrink-0 sm:h-12 sm:w-20">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-4 sm:gap-4 sm:px-6 lg:px-8">
+        <Link href="/" className="relative h-10 w-16 shrink-0 sm:h-11 sm:w-20">
           <Image
             src="/design/logo.png"
             alt="U-DURE"
@@ -81,13 +89,40 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-1 sm:gap-2">
+        <div className="flex items-center gap-0.5 sm:gap-1">
           <SearchBar />
+
+          <button
+            type="button"
+            onClick={() => {
+              setSearchOpen((value) => !value);
+              setMenuOpen(false);
+            }}
+            className="rounded-full p-2.5 text-foreground hover:bg-surface lg:hidden"
+            aria-label={searchOpen ? "Close search" : "Open search"}
+            aria-expanded={searchOpen}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.3-4.3" />
+            </svg>
+          </button>
 
           <Link
             href={authRole ? "/account" : "/login"}
             aria-label="Account"
-            className="rounded-full p-2 text-foreground hover:bg-surface"
+            className="rounded-full p-2.5 text-foreground hover:bg-surface"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -109,7 +144,7 @@ export default function Header() {
           <Link
             href="/wishlist"
             aria-label="Wishlist"
-            className="rounded-full p-2 text-foreground hover:bg-surface"
+            className="hidden rounded-full p-2.5 text-foreground hover:bg-surface min-[420px]:inline-flex"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -130,7 +165,7 @@ export default function Header() {
           <Link
             href="/checkout"
             aria-label="Cart"
-            className="relative rounded-full p-2 text-foreground hover:bg-surface"
+            className="relative rounded-full p-2.5 text-foreground hover:bg-surface"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -148,7 +183,7 @@ export default function Header() {
               <path d="M9 10V6a3 3 0 0 1 6 0v4" />
             </svg>
             {cartCount > 0 ? (
-              <span className="absolute -right-1 -top-1 inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-foreground px-1 text-[11px] font-semibold text-white">
+              <span className="absolute -right-0.5 -top-0.5 inline-flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-foreground px-1 text-[11px] font-semibold text-white">
                 {cartCount}
               </span>
             ) : null}
@@ -157,12 +192,8 @@ export default function Header() {
           {authRole ? (
             <button
               type="button"
-              onClick={async () => {
-                await fetch("/api/auth", { method: "DELETE" });
-                setAuthRole(null);
-                router.push("/login");
-              }}
-              className="ml-1 hidden rounded-full border border-border bg-white px-3 py-2 text-sm font-medium text-foreground hover:bg-surface sm:inline-flex"
+              onClick={handleSignOut}
+              className="ml-1 hidden rounded-full border border-border bg-white px-3 py-2 text-sm font-medium text-foreground hover:bg-surface lg:inline-flex"
             >
               Sign out
             </button>
@@ -170,8 +201,11 @@ export default function Header() {
 
           <button
             type="button"
-            onClick={() => setMenuOpen((v) => !v)}
-            className="relative rounded-full p-2 text-foreground hover:bg-surface lg:hidden"
+            onClick={() => {
+              setMenuOpen((value) => !value);
+              setSearchOpen(false);
+            }}
+            className="relative rounded-full p-2.5 text-foreground hover:bg-surface lg:hidden"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
           >
@@ -215,8 +249,14 @@ export default function Header() {
         </div>
       </div>
 
+      <SearchBar
+        variant="overlay"
+        open={searchOpen}
+        onOpenChange={setSearchOpen}
+      />
+
       <AnimatePresence>
-        {menuOpen && (
+        {menuOpen ? (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
@@ -230,14 +270,30 @@ export default function Header() {
                   key={link.label}
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  className="rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-surface"
+                  className="rounded-lg px-3 py-3 text-sm font-medium text-foreground hover:bg-surface"
                 >
                   {link.label}
                 </Link>
               ))}
+              <Link
+                href="/wishlist"
+                onClick={() => setMenuOpen(false)}
+                className="rounded-lg px-3 py-3 text-sm font-medium text-foreground hover:bg-surface min-[420px]:hidden"
+              >
+                Wishlist
+              </Link>
+              {authRole ? (
+                <button
+                  type="button"
+                  onClick={handleSignOut}
+                  className="rounded-lg px-3 py-3 text-left text-sm font-medium text-foreground hover:bg-surface lg:hidden"
+                >
+                  Sign out
+                </button>
+              ) : null}
             </div>
           </motion.div>
-        )}
+        ) : null}
       </AnimatePresence>
     </motion.header>
   );

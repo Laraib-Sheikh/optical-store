@@ -73,16 +73,16 @@ export default function ProductCard({ product }: ProductCardProps) {
           </svg>
         </button>
       </div>
-      <div className="flex flex-1 flex-col gap-4 p-5 pt-4">
-        <div>
-          <h3 className="text-base font-medium text-foreground">
+      <div className="flex flex-1 flex-col gap-3 p-4 pt-3 sm:gap-4 sm:p-5 sm:pt-4">
+        <div className="min-w-0">
+          <h3 className="truncate text-base font-medium text-foreground">
             {product.name}
           </h3>
           <p className="mt-1 text-lg font-bold text-foreground">
             {formatPrice(product.price)}
           </p>
         </div>
-        <div className="relative mt-auto flex gap-2">
+        <div className="relative mt-auto flex flex-col gap-2 sm:flex-row">
           <Button
             variant="outline"
             size="sm"

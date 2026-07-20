@@ -41,9 +41,9 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="mx-auto max-w-lg px-4 py-16 sm:px-6 lg:px-8">
-      <div className="rounded-3xl border border-border bg-white p-8 shadow-sm">
-        <h1 className="text-3xl font-semibold text-foreground">Login to Continue</h1>
+    <main className="mx-auto max-w-lg px-4 py-10 sm:px-6 sm:py-16 lg:px-8">
+      <div className="rounded-3xl border border-border bg-white p-5 shadow-sm sm:p-8">
+        <h1 className="text-2xl font-semibold text-foreground sm:text-3xl">Login to Continue</h1>
         <p className="mt-2 text-sm text-muted-foreground">
           Login is required to proceed with checkout.
         </p>

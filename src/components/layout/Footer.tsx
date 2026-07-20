@@ -12,9 +12,9 @@ export default function Footer() {
 
   return (
     <footer className="bg-foreground text-white">
-      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
         <Reveal>
-          <div className="grid gap-12 md:grid-cols-3">
+          <div className="grid gap-8 sm:gap-10 md:grid-cols-3 md:gap-8">
             <div>
               <p className="text-2xl font-bold tracking-tight">Logo</p>
               <div className="mt-5 flex items-center gap-3">

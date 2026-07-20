@@ -78,7 +78,7 @@ export default function OrderForm({ cartItems, userEmail, onOrderPlaced }: Order
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 rounded-3xl border border-border bg-white p-8 shadow-sm">
+    <form onSubmit={handleSubmit} className="space-y-6 rounded-3xl border border-border bg-white p-5 shadow-sm sm:p-8">
       <div className="space-y-4">
         <h2 className="text-xl font-semibold text-foreground">Shipping details</h2>
 

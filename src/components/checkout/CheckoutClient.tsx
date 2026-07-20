@@ -16,10 +16,9 @@ export default function CheckoutClient() {
     [items],
   );
 
-  const userEmail = ""; // not yet available from cookies
+  const userEmail = "";
   const [userEmailState, setUserEmailState] = useState("");
 
-  // fetch signed-in user's email from auth endpoint
   useEffect(() => {
     let mounted = true;
     (async () => {
@@ -28,7 +27,7 @@ export default function CheckoutClient() {
         if (!mounted || !res.ok) return;
         const data = await res.json();
         if (data?.email) setUserEmailState(data.email);
-      } catch (e) {
+      } catch {
         // ignore
       }
     })();
@@ -39,17 +38,19 @@ export default function CheckoutClient() {
 
   if (orderPlaced) {
     return (
-      <main className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="rounded-3xl border border-border bg-white p-8 shadow-sm">
-          <h1 className="text-3xl font-semibold text-foreground">Thank you</h1>
+      <main className="mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-16 lg:px-8">
+        <div className="rounded-3xl border border-border bg-white p-5 shadow-sm sm:p-8">
+          <h1 className="text-2xl font-semibold text-foreground sm:text-3xl">Thank you</h1>
           <p className="mt-2 text-sm text-muted-foreground">
             Your order has been submitted and the admin will review the details.
           </p>
           <div className="mt-8">
-            <Button onClick={() => {
-              clearCart();
-              router.push("/");
-            }}>
+            <Button
+              onClick={() => {
+                clearCart();
+                router.push("/");
+              }}
+            >
               Back to shop
             </Button>
           </div>
@@ -59,34 +60,47 @@ export default function CheckoutClient() {
   }
 
   return (
-    <main className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
-      <div className="grid gap-8 lg:grid-cols-[1.5fr_1fr]">
-        <section className="rounded-3xl border border-border bg-white p-8 shadow-sm">
-          <h1 className="text-3xl font-semibold text-foreground">Checkout</h1>
+    <main className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-16 lg:px-8">
+      <div className="grid gap-6 lg:grid-cols-[1.5fr_1fr] lg:gap-8">
+        <section className="rounded-3xl border border-border bg-white p-5 shadow-sm sm:p-8">
+          <h1 className="text-2xl font-semibold text-foreground sm:text-3xl">Checkout</h1>
           <p className="mt-2 text-sm text-muted-foreground">Complete your order below.</p>
 
-          <div className="mt-8 space-y-4">
-            <div className="rounded-3xl border border-border bg-surface p-6">
+          <div className="mt-6 space-y-4 sm:mt-8">
+            <div className="rounded-3xl border border-border bg-surface p-4 sm:p-6">
               <h2 className="text-lg font-semibold text-foreground">Selected products</h2>
               {items.length === 0 ? (
                 <p className="mt-3 text-sm text-muted-foreground">Your cart is empty.</p>
               ) : (
                 <div className="mt-4 space-y-4">
                   {items.map((item) => (
-                    <div key={item.id} className="flex items-center gap-4 rounded-3xl border border-border bg-white p-4">
-                      <div className="h-20 w-20 overflow-hidden rounded-2xl bg-slate-100">
-                        <img src={item.image} alt={item.name} className="h-full w-full object-cover" />
+                    <div
+                      key={item.id}
+                      className="flex flex-col gap-3 rounded-3xl border border-border bg-white p-4 sm:flex-row sm:items-center"
+                    >
+                      <div className="flex min-w-0 items-center gap-4">
+                        <div className="h-16 w-16 shrink-0 overflow-hidden rounded-2xl bg-slate-100 sm:h-20 sm:w-20">
+                          <img
+                            src={item.image}
+                            alt={item.name}
+                            className="h-full w-full object-cover"
+                          />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <p className="truncate font-semibold text-foreground">{item.name}</p>
+                          <p className="text-sm text-muted-foreground">Qty: {item.quantity}</p>
+                        </div>
                       </div>
-                      <div className="flex-1">
-                        <p className="font-semibold text-foreground">{item.name}</p>
-                        <p className="text-sm text-muted-foreground">Qty: {item.quantity}</p>
-                      </div>
-                      <p className="text-sm font-semibold text-foreground">Rs.{(item.price * item.quantity).toLocaleString("en-IN")}</p>
+                      <p className="shrink-0 text-sm font-semibold text-foreground sm:text-right">
+                        Rs.{(item.price * item.quantity).toLocaleString("en-IN")}
+                      </p>
                     </div>
                   ))}
                   <div className="rounded-3xl border border-border bg-white p-4">
                     <p className="font-semibold text-foreground">Total</p>
-                    <p className="text-2xl font-semibold text-foreground">Rs.{total.toLocaleString("en-IN")}</p>
+                    <p className="text-xl font-semibold text-foreground sm:text-2xl">
+                      Rs.{total.toLocaleString("en-IN")}
+                    </p>
                   </div>
                 </div>
               )}
